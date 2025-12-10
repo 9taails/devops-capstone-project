@@ -3,14 +3,12 @@ name: user-story
 about: This is a User Story template.
 title: "[FEATURE]"
 labels: enhancement
-assignees: ''
-
 ---
 
 ### Role, Function, Benefit
-As a 
-I need  
-So that 
+    As a 
+    I need  
+    So that 
             
 ## Acceptance Criteria     
     Given 
@@ -18,8 +16,9 @@ So that
     Then 
 
 ## Notes / Implementation details
-- Details:
-- Dependencies: 
+    - Details:
+    
+    - Dependencies: 
 
 ## Estimation
-- Story points:
+    - Story points:
