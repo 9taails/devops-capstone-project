@@ -51,9 +51,7 @@ def create_accounts():
     account.deserialize(request.get_json())
     account.create()
     message = account.serialize()
-    # Uncomment once get_accounts has been implemented
-    # location_url = url_for("get_accounts", account_id=account.id, _external=True)
-    location_url = "/"  # Remove once get_accounts has been implemented
+    location_url = url_for("get_account_by_id", account_id=account.id, _external=True)
     return make_response(
         jsonify(message), 
         status.HTTP_201_CREATED, 
@@ -83,16 +81,16 @@ def list_all_accounts():
 # READ AN ACCOUNT
 ######################################################################
 
-@app.route("/accounts/<int:id>", methods=['GET'])
-def get_account_by_id(id):
+@app.route("/accounts/<int:account_id>", methods=['GET'])
+def get_account_by_id(account_id):
     """
     This endpoint will return an account with given id number.
     """
-    app.logger.debug("Retrieving an account with %s", id)
+    app.logger.debug("Retrieving an account with %s", account_id)
 
-    account = Account.find(id)
+    account = Account.find(account_id)
 
-    if account and id is not None:
+    if account and account_id is not None:
         return account.serialize(), status.HTTP_200_OK
     
     return {"message: No account found."}, status.HTTP_404_NOT_FOUND
@@ -101,8 +99,9 @@ def get_account_by_id(id):
 # UPDATE AN EXISTING ACCOUNT
 ######################################################################
 
-# ... place you code here to UPDATE an account ...
-
+@app.route("/accounts/<int:id>")
+def update_account(id):
+    pass
 
 ######################################################################
 # DELETE AN ACCOUNT
