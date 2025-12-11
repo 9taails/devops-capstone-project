@@ -212,3 +212,15 @@ class TestAccountService(TestCase):
 
         resp = self.client.delete(f"{BASE_URL}/5")
         self.assertEqual(resp.status_code, status.HTTP_404_NOT_FOUND)
+
+    # Test case for trying to use POST method on an existing 
+
+    def test_post_to_existing_account(self):
+        """It should return 405_METHOD_NOT_ALLOWED."""
+
+        test_list = self._create_accounts(1)
+        test_account = test_list[0]
+        
+        resp = self.client.post(f"{BASE_URL}/{test_account.id}")
+        self.assertEqual(resp.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
+        
