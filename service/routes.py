@@ -31,7 +31,7 @@ def index():
             version="1.0",
             # paths=url_for("list_accounts", _external=True),
         ),
-        status.HTTP_200_OK,
+        status.HTTP_200_OK
     )
 
 
@@ -42,7 +42,8 @@ def index():
 def create_accounts():
     """
     Creates an Account
-    This endpoint will create an Account based the data in the body that is posted
+    This endpoint will create an Account based the data 
+    in the body that is posted.
     """
     app.logger.info("Request to create an Account")
     check_content_type("application/json")
@@ -54,22 +55,47 @@ def create_accounts():
     # location_url = url_for("get_accounts", account_id=account.id, _external=True)
     location_url = "/"  # Remove once get_accounts has been implemented
     return make_response(
-        jsonify(message), status.HTTP_201_CREATED, {"Location": location_url}
+        jsonify(message), 
+        status.HTTP_201_CREATED, 
+        {"Location": location_url}
     )
 
 ######################################################################
 # LIST ALL ACCOUNTS
 ######################################################################
 
-# ... place you code here to LIST accounts ...
+@app.route("/accounts", methods=['GET'])
+def list_all_accounts():
+    """
+    List all accounts.
+    This endpoint will return a list of all accounts 
+    currently in the database.
+    """ 
 
+    app.logger.info("Request to get all Accounts")
+    accounts_in_db = Account.all()
+
+    account_list = [account.serialize() for account in accounts_in_db]
+
+    return jsonify(account_list), status.HTTP_200_OK
 
 ######################################################################
 # READ AN ACCOUNT
 ######################################################################
 
-# ... place you code here to READ an account ...
+@app.route("/accounts/<int:id>", methods=['GET'])
+def get_account_by_id(id):
+    """
+    This endpoint will return an account with given id number.
+    """
+    app.logger.debug("Retrieving an account with %s", id)
 
+    account = Account.find(id)
+
+    if account and id is not None:
+        return account.serialize(), status.HTTP_200_OK
+    
+    return {"message: No account found."}, status.HTTP_404_NOT_FOUND
 
 ######################################################################
 # UPDATE AN EXISTING ACCOUNT
