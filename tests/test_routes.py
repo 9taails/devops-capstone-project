@@ -144,7 +144,6 @@ class TestAccountService(TestCase):
 
         test_list = self._create_accounts(1)
         test_account = test_list[0]
-        test_account_id = None
 
         resp = self.client.get(f"{BASE_URL}/{test_account.id}")
         self.assertEqual(resp.status_code, status.HTTP_200_OK)
@@ -175,7 +174,7 @@ class TestAccountService(TestCase):
         check_data = check.get_json()
         check_name = check_data['name']
         self.assertEqual(check_name, 'French Fries')
-    
+
     # Test case for updating account info with missing account
 
     def test_update_missing_account(self):
@@ -185,22 +184,22 @@ class TestAccountService(TestCase):
         self.assertEqual(resp.status_code, status.HTTP_404_NOT_FOUND)
 
     # Test case for deleting an account
-    
+
     def test_delete_an_account(self):
         """It should remove an account from the database."""
 
         test_list = self._create_accounts(1)
         test_account = test_list[0]
-        
+
         resp = self.client.get(f"{BASE_URL}/{test_account.id}")
         self.assertEqual(resp.status_code, status.HTTP_200_OK)
 
         response = self.client.delete(f"{BASE_URL}/{test_account.id}")
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
-        
+
         resp = self.client.get(f"{BASE_URL}/{test_account.id}")
         self.assertEqual(resp.status_code, status.HTTP_404_NOT_FOUND)
-        
+
         accounts = self.client.get(BASE_URL)
         accounts_data = accounts.get_json()
         self.assertEqual(len(accounts_data), 0)
@@ -213,14 +212,13 @@ class TestAccountService(TestCase):
         resp = self.client.delete(f"{BASE_URL}/5")
         self.assertEqual(resp.status_code, status.HTTP_404_NOT_FOUND)
 
-    # Test case for trying to use POST method on an existing 
+    # Test case for trying to use POST method on an existing
 
     def test_post_to_existing_account(self):
         """It should return 405_METHOD_NOT_ALLOWED."""
 
         test_list = self._create_accounts(1)
         test_account = test_list[0]
-        
+
         resp = self.client.post(f"{BASE_URL}/{test_account.id}")
         self.assertEqual(resp.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
-        
