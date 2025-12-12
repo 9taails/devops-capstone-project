@@ -25,6 +25,8 @@ HTTPS_ENVIRON = {'wsgi.url_scheme': 'https'}
 ######################################################################
 #  T E S T   C A S E S
 ######################################################################
+
+
 class TestAccountService(TestCase):
     """Account Service Tests"""
 
@@ -253,7 +255,7 @@ class TestAccountService(TestCase):
 
     def test_add_cors_policies(self):
         """It should return the header
-            'Access-Control-Allow-Origin': '*'        
+            'Access-Control-Allow-Origin': '*'
         """
 
         response = self.client.get("/", environ_overrides=HTTPS_ENVIRON)
