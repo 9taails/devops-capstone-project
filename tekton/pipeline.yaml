@@ -50,3 +50,20 @@ spec:
         value: ["--count", "--max-complexity=10", "--max-line-length=127", "--statistics"]
       runAfter:
         - clone
+
+    - name: nose
+      description: This will run the nosetests on the provided input.
+      workspaces:
+        - name: source
+          workspace: pipeline-workspace          
+      params:
+      - name: args
+        description: Arguments to pass to nose
+        type: string
+        default: "-v"
+      - name: database_uri
+        description: Database connection string
+        type: string
+        default: "sqlite:///test.db"
+      runAfter:
+        - clone
